@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import './App.css'
 import NWCustomerAdd from './NWCustomerAdd'
+import Navigaatio from './Navigaatio'
 
 class NWCustomerFetch extends Component {
     constructor(props) {
@@ -128,7 +129,7 @@ class NWCustomerFetch extends Component {
         // console.log("State on: ", this.state.todos) //pilkku yhdistää, + ei futaa
 
 
-        if (this.state.customers.length > 0) { //this.state.todos.length
+        if (this.state.customers.length > 9 ) { //this.state.todos.length
 
             //bodyssa loop, javascriptiä! Ps. funktionaalisessa ei this. mut tässä tarvii
             return(
@@ -161,9 +162,40 @@ class NWCustomerFetch extends Component {
                 </div>
             )
         }
+        else if (this.state.customers.length > 0 && this.state.customers.length < 10) {
+            return(
+                <div className="customers">
+                    <h2>Customers</h2>
+                    <button onClick={this.handleClickPrev}>Previous</button>
+                    <button disabled="true">Next</button>
+                    <button onClick={this.handleClickAddForm}>Lisää uusi</button>
+
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Firm</th>
+                                <th>Contact person</th>
+                                <th>City</th>
+                                <th>Country</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {this.state.customers.map(c => (
+                                <tr key={c.customerId}>
+                                    <td>{c.companyName}</td>
+                                    <td>{c.contactName}</td>
+                                    <td>{c.city}</td>
+                                    <td>{c.country}</td>
+                                </tr>
+                            ))} 
+                        </tbody>
+                    </table>
+                </div>
+            )
+        }
         else {
             return(
-                <p>Downloading..</p>
+                <h4>Downloading..</h4>
             )
         }
     }
