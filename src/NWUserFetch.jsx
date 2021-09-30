@@ -12,6 +12,13 @@ class NWUserFetch extends Component {
             take: 10,
             show: "table"
         }
+        this.handleChildUnmount = this.handleChildUnmount.bind(this);
+    }
+
+    //kaikkien eri lomakkeiden muokkaamiseen, lisäämiseen ym. 
+    handleChildUnmount() {
+        this.setState({ show: "table" });
+        this.haeNwRestApista();
     }
 
     handleClickAddForm = () => {
@@ -50,7 +57,7 @@ class NWUserFetch extends Component {
              if (this.state.show === 'addForm') //voi nimetä itse "lisäyslomake" tässä tapauksessa
              {
                  return(
-                     <NWUserAdd />
+                     <NWUserAdd unmountMe={this.handleChildUnmount}/>
                  )
              }
 

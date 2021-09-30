@@ -15,6 +15,18 @@ class NWCustomerFetch extends Component {
             // limit: 10
             show: "table"
         }
+        this.handleChildUnmount = this.handleChildUnmount.bind(this);
+        // this.handleChildUnmountAdd = this.handleChildUnmountAdd.bind(this);
+        // this.handleChildUnmountEdit = this.handleChildUnmountEdit.bind(this);
+        // this.handleChildUnmountDelete = this.handleChildUnmountDelete.bind(this);
+    }
+
+    //kaikkien eri lomakkeiden muokkaamiseen, lisäämiseen ym. 
+    handleChildUnmount() {
+        // console.log("Ollaan NWCustomerFetch -handleChildUnmountAdd-rutiinissa - - - - - - ");
+        this.setState({ show: "table" });
+        // this.handleClickTable();
+        this.haeNwRestApista();
     }
 
     //property, jonka arvona funktio:
@@ -107,7 +119,7 @@ class NWCustomerFetch extends Component {
         if (this.state.show === 'addForm') //voi nimetä itse "lisäyslomake" tässä tapauksessa
         {
             return(
-                <NWCustomerAdd />
+                <NWCustomerAdd unmountMe={this.handleChildUnmount} />
             )
         }
 

@@ -110,9 +110,10 @@ class NWCustomerAdd extends Component {
                 if (jsResponse) {
                     console.log("Pyyntö asiakkaan tallettamiseksi tehty -- -- -- -- --");
                     // this.dismiss();
+                    this.props.unmountMe()
                 }
             });
-            
+
     }
 
     render() {
