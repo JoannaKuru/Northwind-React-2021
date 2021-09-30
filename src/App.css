@@ -1,10 +1,72 @@
 .App {
   text-align: center;
+  width: 50;
+  height: 50;
+  margin-left: 5%;
+  margin-right: 5%;
+  background-color:darkgray;
+}
+
+.box3 {
+  background-color: rgb(151, 175, 180);
+  width: 235px;
+  height: 1000px;
+  float: left;
+}
+
+.box13 {
+  background-color: rgb(169, 152, 184);
+  width: 235px;
+  height: 1000px;
+  float: left;
 }
 
 .App-logo {
   height: 40vmin;
   pointer-events: none;
+}
+
+.digitaalikello {
+  text-align: center;
+  align-items: center;
+  background-color:lightgray;
+}
+
+.customers {
+  margin-left: 5%;
+  margin-right: 5%;
+  text-align: center;
+  align-items: center;
+  background-color:rgb(104, 128, 133);
+}
+
+.users {
+  margin-left: 5%;
+  margin-right: 5%;
+  text-align: center;
+  align-items: center;
+  background-color:rgb(120, 104, 133);
+}
+
+.typicode {
+  margin-left: 5%;
+  margin-right: 5%;
+  text-align: center;
+  align-items: center;
+  background-color:lightgray;
+}
+
+.Kello {
+  /* margin-left: 400px; */
+  border-radius: 20px;
+  /* border-width: 5ch; */
+  /* border-color:black; */
+  text-align: center;
+  align-items: center;
+  margin-top: 20px;
+  margin-left: 40%;
+  margin-right: 40%;
+  background-color:darkslategrey;
 }
 
 @media (prefers-reduced-motion: no-preference) {
