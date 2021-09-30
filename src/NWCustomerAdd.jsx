@@ -112,6 +112,7 @@ class NWCustomerAdd extends Component {
                     // this.dismiss();
                 }
             });
+            
     }
 
     render() {
