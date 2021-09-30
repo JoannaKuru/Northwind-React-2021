@@ -20,6 +20,7 @@ class NWCustomerFetch extends Component {
         // this.handleChildUnmountEdit = this.handleChildUnmountEdit.bind(this);
         // this.handleChildUnmountDelete = this.handleChildUnmountDelete.bind(this);
     }
+    
 
     //kaikkien eri lomakkeiden muokkaamiseen, lisäämiseen ym. 
     handleChildUnmount() {
