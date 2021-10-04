@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import './App.css'
 import NWUserAdd from './NWUserAdd';
+import Helpit from './Helpit';
 
 class NWUserFetch extends Component {
     constructor(props) {
@@ -10,9 +11,23 @@ class NWUserFetch extends Component {
             recordcount: 0,
             start: 0,
             take: 10,
-            show: "table"
+            show: "table",
+            näytäHelppi: false //ominaisuus
         }
         this.handleChildUnmount = this.handleChildUnmount.bind(this);
+    }
+
+    näytäHelppiPainettu = (event) => {
+        if (this.state.näytäHelppi === false) {
+            this.setState({
+                näytäHelppi: true
+            })
+        }
+        else {
+            this.setState({
+                näytäHelppi: false
+            })
+        }
     }
 
     //kaikkien eri lomakkeiden muokkaamiseen, lisäämiseen ym. 
@@ -82,6 +97,8 @@ class NWUserFetch extends Component {
                                 <th>Access level ID</th>
                             </tr>
                         </thead>
+
+                        {/* Jokaiselle userille tehdään "mappaus", map looppaa asiakkaat läpi ja asettaa kulloisenkin c:hen (korvaa for each/ for-loopin) */}
                         <tbody>
                             {this.state.users.map(u => (
                                 <tr key={u.loginId}>
@@ -90,11 +107,16 @@ class NWUserFetch extends Component {
                                     <td>{u.email}</td>
                                     <td>{u.username}</td>
                                     {/* <td>{u.password}</td> */}
-                                    <td>{u.accesslevelID}</td>
+                                    <td>{u.accesslevelId}</td>
                                 </tr>
                             ))} 
                         </tbody>
                     </table>
+                    <p>
+                        {this.state.näytäHelppi === false && <button onClick={this.näytäHelppiPainettu}>Näytä helppi</button>}
+                        {this.state.näytäHelppi === true && <button onClick={this.näytäHelppiPainettu}>Piilota helppi</button>}
+                        {this.state.näytäHelppi === true && <Helpit moduli={"user"} />}
+                    </p>
                 </div>
             )
         }

@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import './App.css'
+import MD5 from 'md5'
 
 class NWUserAdd extends Component {
 
@@ -7,93 +8,93 @@ class NWUserAdd extends Component {
         super(props)
 
         this.state = {
-            CustomerID: '', CompanyName: '', ContactName: '', ContactTitle: '',
-            Address: '',PostalCode: '', Country: '', City: '', Phone: '', Fax: ''
+            // LoginId: '', 
+            Firstname: '', Lastname: '', Email: '',
+            Username: '', Password: '', PasswordAgain: '', AccesslevelId: '', Tarkistus: ''
+
         }
-        this.handleChangeCustomerID = this.handleChangeCustomerID.bind(this);
-        this.handleChangeCompanyName = this.handleChangeCompanyName.bind(this);
-        this.handleChangeContactName = this.handleChangeContactName.bind(this);
-        this.handleChangeContactTitle = this.handleChangeContactTitle.bind(this);
-        this.handleChangeAddress = this.handleChangeAddress.bind(this);
-        this.handleChangeCity = this.handleChangeCity.bind(this);
-        this.handleChangePostalCode = this.handleChangePostalCode.bind(this);
-        this.handleChangeCountry = this.handleChangeCountry.bind(this);
-        this.handleChangePhone = this.handleChangePhone.bind(this);
-        this.handleChangeFax = this.handleChangeFax.bind(this);
+        // this.handleChangeLoginId = this.handleChangeLoginId.bind(this);
+        this.handleChangeFirstname = this.handleChangeFirstname.bind(this);
+        this.handleChangeLastname = this.handleChangeLastname.bind(this);
+        this.handleChangeEmail = this.handleChangeEmail.bind(this);
+        this.handleChangeUsername = this.handleChangeUsername.bind(this);
+        this.handleChangePassword = this.handleChangePassword.bind(this);
+        this.handleChangePasswordAgain = this.handleChangePasswordAgain.bind(this);
+        this.handleChangeAccesslevelId = this.handleChangeAccesslevelId.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
     // Input kenttien onChange tapahtumankäsittelijät
-    handleChangeCustomerID(event) {
+    // handleChangeLoginId(event) {
+    //     var syöte = event.target.value;
+    //     this.setState({ ...this.state, LoginId: syöte.toUpperCase() });
+    // }
+    handleChangeFirstname(event) {
         var syöte = event.target.value;
-        this.setState({ ...this.state, CustomerID: syöte.toUpperCase() });
+        this.setState({ ...this.state, Firstname: syöte });
     }
-    handleChangeCompanyName(event) {
+    handleChangeLastname(event) {
         var syöte = event.target.value;
-        this.setState({ ...this.state, CompanyName: syöte });
+        this.setState({ ...this.state, Lastname: syöte });
     }
-    handleChangeContactName(event) {
+    handleChangeEmail(event) {
         var syöte = event.target.value;
-        this.setState({ ...this.state, ContactName: syöte });
+        this.setState({ ...this.state, Email: syöte });
     }
-    handleChangeContactTitle(event) {
+    handleChangeUsername(event) {
         var syöte = event.target.value;
-        this.setState({ ...this.state, ContactTitle: syöte });
+        this.setState({ ...this.state, Username: syöte });
     }
-    handleChangeAddress(event) {
+    handleChangePassword(event) {
         var syöte = event.target.value;
-        this.setState({ ...this.state, Address: syöte });
+        this.setState({ ...this.state, Password: syöte });
     }
-    handleChangeCity(event) {
+    handleChangePasswordAgain(event) {
         var syöte = event.target.value;
-        this.setState({ ...this.state, City: syöte });
+        if (syöte !== this.state.Password) {
+            this.setState( {...this.state, Tarkistus: 'Salasanat eivät täsmää.' });
+        }
+        else {
+            this.setState( {...this.state, Tarkistus: 'Salasanat täsmäävät.' });
+        }
     }
-    handleChangePostalCode(event) {
+    handleChangeAccesslevelId(event) {
         var syöte = event.target.value;
-        this.setState({ ...this.state, PostalCode: syöte });
-    }
-    handleChangeCountry(event) {
-        var syöte = event.target.value;
-        this.setState({ ...this.state, Country: syöte });
-    }
-    handleChangePhone(event) {
-        var syöte = event.target.value;
-        this.setState({ ...this.state, Phone: syöte });
-    }
-    handleChangeFax(event) {
-        var syöte = event.target.value;
-        this.setState({ ...this.state, Fax: syöte });
+        this.setState({ ...this.state, AccesslevelId: syöte });
     }
 
     // Lomakkeen onSubmit tapahtumankäsittelijä
     handleSubmit(event) {
-        alert('Lähetettiin asiakas: ' + this.state.CustomerID);
+        if (this.state.Tarkistus === "Salasanat eivät täsmää.") {
+            alert('Salasanat eivät täsmää.');
+            event.preventDefault();
+            return;
+        }
+        alert('Lähetettiin käyttäjä: ' + this.state.Username);
         event.preventDefault();
         this.InsertoiKantaan();
     }
 
     InsertoiKantaan() {
-        // Luodaan Javascript asiakasobjekti, johon haetaan state:sta tiedot                     
-        const asiakas = {
-            CustomerID: this.state.CustomerID,
-            CompanyName: this.state.CompanyName,
-            ContactName: this.state.ContactName,
-            ContactTitle: this.state.ContactTitle,
-            Address: this.state.Address,
-            City: this.state.City,
-            PostalCode: this.state.PostalCode,
-            Country: this.state.Country,
-            Phone: this.state.Phone,
-            Fax: this.state.Fax
+        // Luodaan Javascript käyttäjäobjekti, johon haetaan state:sta tiedot                     
+        const kayttaja = {
+            // LoginId: this.state.LoginId,
+            Firstname: this.state.Firstname,
+            Lastname: this.state.Lastname,
+            Email: this.state.Email,
+            Username: this.state.Username,
+            Password: MD5(this.state.Password),
+            // AccesslevelId: this.state.AccesslevelId, (tämäkin toimii, outoa kyllä)
+            AccesslevelId: parseInt(this.state.AccesslevelId),
         };
 
         // send an asynchronous request to the backend
-        const asiakasJson = JSON.stringify(asiakas);
-        console.log("asiakasJson = " + asiakasJson);
+        const kayttajaJson = JSON.stringify(kayttaja);
+        console.log("kayttajaJson = " + kayttajaJson);
 
         let apiUrl = 'https://localhost:5001/api/users'
 
-        //let apiUrl = 'https://aspnet-react-northwind.azurewebsites.net/nw/customers/'
+        //let apiUrl = 'https://aspnet-react-northwind.azurewebsites.net/api/users/'
 
         //request
         fetch(apiUrl, {
@@ -102,13 +103,12 @@ class NWUserAdd extends Component {
                 "Accept": "application/json",
                 "Content-Type": "application/json"
             },
-            body: asiakasJson
+            body: kayttajaJson
         }).then((response) => response.json()) //palautus=vastaus=vain infoa, ei pakollinen -> muuttaa jsonin javascriptiksi
             .then((jsResponse) => {
                 console.log(`Response from server: ${jsResponse}.`);
                 if (jsResponse) {
                     console.log("Pyyntö asiakkaan tallettamiseksi tehty -- -- -- -- --");
-                    // this.dismiss();
                     this.props.unmountMe()
                 }
             });
@@ -117,19 +117,19 @@ class NWUserAdd extends Component {
     render() {
         return(
         <div>
-            <h2>Asiakkaan lisääminen</h2>
+            <h2>Käyttäjän lisääminen</h2>
 
             <form className="box13" onSubmit={this.handleSubmit}>
-                <input type="text" title="Syötä asiakastunnus 5x ISO KIRJAIN" placeholder="ID = 5x ISO kirjain" onChange={this.handleChangeCustomerID} />
-                <input type="text" placeholder="Firma" onChange={this.handleChangeCompanyName} />
-                <input type="text" placeholder="Yhteyshlö" onChange={this.handleChangeContactName} />
-                <input type="text" placeholder="hlö titteli" onChange={this.handleChangeContactTitle} />
-                <input type="text" placeholder="Osoite" onChange={this.handleChangeAddress} />
-                <input type="text" placeholder="Postinumero" onChange={this.handleChangePostalCode} />
-                <input type="text" placeholder="Kaupunki" onChange={this.handleChangeCity} />
-                <input type="text" placeholder="Maa" onChange={this.handleChangeCountry} />
-                <input type="text" placeholder="Puh nro" onChange={this.handleChangePhone} />
-                <input type="text" placeholder="Fax nro" onChange={this.handleChangeFax} />
+                {/* Allaoleva: miten toteutetaan..? */}
+                {/* <input type="text" title="Syötä käyttäjätunnus, numerojärjestys" placeholder="ID = 5x ISO kirjain" onChange={this.handleChangeLoginId} /> */}
+                <input type="text" placeholder="Etunimi" onChange={this.handleChangeFirstname} />
+                <input type="text" placeholder="Sukunimi" onChange={this.handleChangeLastname} />
+                <input type="text" placeholder="Email" onChange={this.handleChangeEmail} />
+                <input type="text" placeholder="Käyttäjätunnus" onChange={this.handleChangeUsername} />
+                <input type="password" placeholder="Salasana" onChange={this.handleChangePassword} />
+                <p>{this.state.Tarkistus}</p>
+                <input type="password" placeholder="Salasana uudelleen" onChange={this.handleChangePasswordAgain} />
+                <input type="text" placeholder="Accesslevel" onChange={this.handleChangeAccesslevelId} />
                 <br />
                 <button type="submit">Tallenna uudet tiedot</button>
             </form>

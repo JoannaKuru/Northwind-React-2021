@@ -43,6 +43,8 @@
 .users {
   margin-left: 5%;
   margin-right: 5%;
+  padding: 15px;
+  padding-left: 20px;
   text-align: center;
   align-items: center;
   background-color:rgb(120, 104, 133);

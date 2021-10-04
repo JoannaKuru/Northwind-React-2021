@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import './App.css'
 import NWCustomerAdd from './NWCustomerAdd'
-import Navigaatio from './Navigaatio'
+import Helpit from './Helpit';
 
 class NWCustomerFetch extends Component {
     constructor(props) {
@@ -14,7 +14,9 @@ class NWCustomerFetch extends Component {
             take: 10,
             // page: 1, 
             // limit: 10
-            show: "table"
+            show: "table",
+            näytäHelppi: false //ominaisuus
+
         }
         this.handleChildUnmount = this.handleChildUnmount.bind(this);
         // this.handleChildUnmountAdd = this.handleChildUnmountAdd.bind(this);
@@ -33,6 +35,19 @@ class NWCustomerFetch extends Component {
     //property, jonka arvona funktio:
     handleClickAddForm = () => {
         this.setState({show: 'addForm'})
+    }
+
+    näytäHelppiPainettu = (event) => {
+        if (this.state.näytäHelppi === false) {
+            this.setState({
+                näytäHelppi: true
+            })
+        }
+        else {
+            this.setState({
+                näytäHelppi: false
+            })
+        }
     }
 
     // handleClickAddForm() { //perinteinen tapa, ei futaa
@@ -159,6 +174,11 @@ class NWCustomerFetch extends Component {
                             ))} 
                         </tbody>
                     </table>
+                    <p>
+                        {this.state.näytäHelppi === false && <button onClick={this.näytäHelppiPainettu}>Näytä helppi</button>}
+                        {this.state.näytäHelppi === true && <button onClick={this.näytäHelppiPainettu}>Piilota helppi</button>}
+                        {this.state.näytäHelppi === true && <Helpit moduli={"customer"} />}
+                    </p>
                 </div>
             )
         }
@@ -190,6 +210,11 @@ class NWCustomerFetch extends Component {
                             ))} 
                         </tbody>
                     </table>
+                    <p>
+                        {this.state.näytäHelppi === false && <button onClick={this.näytäHelppiPainettu}>Näytä helppi</button>}
+                        {this.state.näytäHelppi === true && <button onClick={this.näytäHelppiPainettu}>Piilota helppi</button>}
+                        {this.state.näytäHelppi === true && <Helpit moduli={"user"} />}
+                    </p>
                 </div>
             )
         }

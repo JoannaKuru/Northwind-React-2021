@@ -19,6 +19,22 @@ class Helpit extends Component {
                 </div>
             )
         }
+        if (this.props.moduli === "user") {
+            return(
+                <div className="helppi">
+                    <h4>Helppi</h4>
+                    <p>Toiminto listaa käyttäjät tai voit lisätä käyttäjän.</p>
+                </div>
+            )
+        }
+        if (this.props.moduli === "customer") {
+            return(
+                <div className="helppi">
+                    <h4>Helppi</h4>
+                    <p>Toiminto listaa asiakkaat tai voit lisätä asiakkaan.</p>
+                </div>
+            )
+        }
     }
 }
 
