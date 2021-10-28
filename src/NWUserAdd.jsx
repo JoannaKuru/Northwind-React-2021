@@ -7,13 +7,11 @@ class NWUserAdd extends Component {
     constructor(props) {
         super(props)
 
-        this.state = {
-            // LoginId: '', 
-            Firstname: '', Lastname: '', Email: '',
+        this.state = { LoginId: '', Firstname: '', Lastname: '', Email: '',
             Username: '', Password: '', PasswordAgain: '', AccesslevelId: '', Tarkistus: ''
 
         }
-        // this.handleChangeLoginId = this.handleChangeLoginId.bind(this);
+        this.handleChangeLoginId = this.handleChangeLoginId.bind(this);
         this.handleChangeFirstname = this.handleChangeFirstname.bind(this);
         this.handleChangeLastname = this.handleChangeLastname.bind(this);
         this.handleChangeEmail = this.handleChangeEmail.bind(this);
@@ -25,10 +23,10 @@ class NWUserAdd extends Component {
     }
 
     // Input kenttien onChange tapahtumankäsittelijät
-    // handleChangeLoginId(event) {
-    //     var syöte = event.target.value;
-    //     this.setState({ ...this.state, LoginId: syöte.toUpperCase() });
-    // }
+    handleChangeLoginId(event) {
+        var syöte = event.target.value;
+        this.setState({ ...this.state, LoginId: syöte.toUpperCase() });
+    }
     handleChangeFirstname(event) {
         var syöte = event.target.value;
         this.setState({ ...this.state, Firstname: syöte });
@@ -92,14 +90,16 @@ class NWUserAdd extends Component {
         const kayttajaJson = JSON.stringify(kayttaja);
         console.log("kayttajaJson = " + kayttajaJson);
 
-        let apiUrl = 'https://localhost:5001/api/users'
+        // let apiUrl = 'https://localhost:5001/api/users/'
+        let apiUrl = 'https://northwindrestapi2021azure.azurewebsites.net/api/users/'
 
-        //let apiUrl = 'https://aspnet-react-northwind.azurewebsites.net/api/users/'
+        let jwtoken = localStorage.getItem('token')
 
         //request
         fetch(apiUrl, {
             method: "POST",
             headers: {
+                Authorization: "Bearer " + jwtoken,
                 "Accept": "application/json",
                 "Content-Type": "application/json"
             },
@@ -108,7 +108,7 @@ class NWUserAdd extends Component {
             .then((jsResponse) => {
                 console.log(`Response from server: ${jsResponse}.`);
                 if (jsResponse) {
-                    console.log("Pyyntö asiakkaan tallettamiseksi tehty -- -- -- -- --");
+                    console.log("Pyyntö käyttäjän tallettamiseksi tehty -- -- -- -- --");
                     this.props.unmountMe()
                 }
             });
@@ -116,20 +116,16 @@ class NWUserAdd extends Component {
 
     render() {
         return(
-        <div>
-            <h2>Käyttäjän lisääminen</h2>
-
+            <div>
             <form className="box13" onSubmit={this.handleSubmit}>
-                {/* Allaoleva: miten toteutetaan..? */}
-                {/* <input type="text" title="Syötä käyttäjätunnus, numerojärjestys" placeholder="ID = 5x ISO kirjain" onChange={this.handleChangeLoginId} /> */}
                 <input type="text" placeholder="Etunimi" onChange={this.handleChangeFirstname} />
                 <input type="text" placeholder="Sukunimi" onChange={this.handleChangeLastname} />
                 <input type="text" placeholder="Email" onChange={this.handleChangeEmail} />
                 <input type="text" placeholder="Käyttäjätunnus" onChange={this.handleChangeUsername} />
                 <input type="password" placeholder="Salasana" onChange={this.handleChangePassword} />
-                <p>{this.state.Tarkistus}</p>
                 <input type="password" placeholder="Salasana uudelleen" onChange={this.handleChangePasswordAgain} />
                 <input type="text" placeholder="Accesslevel" onChange={this.handleChangeAccesslevelId} />
+                <p>{this.state.Tarkistus}</p>
                 <br />
                 <button type="submit">Tallenna uudet tiedot</button>
             </form>

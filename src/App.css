@@ -7,11 +7,51 @@
   background-color:darkgray;
 }
 
+.box1 {
+  background-color: rgb(163, 180, 151);
+  width: 235px;
+  height: 1000px;
+  float: left;
+  text-align: center;
+}
+
 .box3 {
   background-color: rgb(151, 175, 180);
   width: 235px;
   height: 1000px;
   float: left;
+  text-align: center;
+}
+
+.box4 {
+  background-color: rgb(187, 145, 145);
+  width: 235px;
+  height: 1000px;
+  float: left;
+  text-align: center;
+}
+
+.box5 {
+  background-color: rgb(145, 153, 187);
+  width: 235px;
+  height: 1000px;
+  float: left;
+  text-align: center;
+}
+
+.box6 {
+  background-color: rgb(145, 187, 161);
+  width: 235px;
+  height: 1000px;
+  float: left;
+  text-align: center;
+}
+
+.box7 {
+  background-color: rgb(252, 253, 252);
+  width: 188px;
+  text-align: center;
+  margin-left: 10%;
 }
 
 .box13 {
@@ -19,6 +59,7 @@
   width: 235px;
   height: 1000px;
   float: left;
+  text-align: center;
 }
 
 .App-logo {
@@ -37,7 +78,15 @@
   margin-right: 5%;
   text-align: center;
   align-items: center;
-  background-color:rgb(104, 128, 133);
+  background-color:rgb(108, 140, 143);
+}
+
+.products {
+  margin-left: 5%;
+  margin-right: 5%;
+  text-align: center;
+  align-items: center;
+  background-color:rgb(104, 133, 116);
 }
 
 .users {

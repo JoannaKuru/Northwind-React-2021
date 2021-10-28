@@ -2,9 +2,6 @@ import React, { Component } from 'react'
 import './App.css'
 import NWCustomerAdd from './NWCustomerAdd'
 import Helpit from './Helpit';
-import NWCustomerEdit from './NWCustomerEdit'
-import NWCustomerDelete from './NWCustomerDelete'
-
 
 class NWCustomerFetch extends Component {
     constructor(props) {
@@ -137,37 +134,16 @@ class NWCustomerFetch extends Component {
     }
 
     haeNwRestApista() {
-
-        let jwtoken = localStorage.getItem('token')
-
-        // let uri = `https://localhost:5001/api/customers/r?offset= ${this.state.start} &limit= ${this.state.take}`
-        let uri = `https://northwindrestapi2021azure.azurewebsites.net/api/customers/r?offset= ${this.state.start} &limit= ${this.state.take}`
-    
-        fetch(uri, {
-            method: "GET",
-            headers: {
-                Authorization: "Bearer " + jwtoken,
-                "Accept": "application/json",
-                "Content-Type": "application/json"
-            }
-        })
-        .then(res => res.json()) //muutetaan jsonista javascriptiksi
-        .then(oliot => this.setState({customers: oliot}))
-
-        //ENNEN KIRJAUTUMISTA: fetch(`https://northwindrestapi2021azure.azurewebsites.net/api/customers/r?offset= ${this.state.start} &limit= ${this.state.take}`)
-
-
         //fetch('https://localhost:5001/api/customers') VIELÄ VÄLIVAIHE
         // fetch('https://jsonplaceholder.typicode.com/todos?_page='+this.state.page+'&_limit='+this.state.limit) AIKAISEMPI TÄMÄKIN
         // fetch('https://jsonplaceholder.typicode.com/todos?_start='+this.state.start+'&_end='+this.state.end) VANHA, NEXT-PREVIOUS ei futannu oikein
         
         // fetch('https://localhost:5001/api/customers?_page='+this.state.page+'&_limit='+this.state.limit)
         // fetch('https://localhost:5001/api/customers/r?offset='+this.state.start+'&_limit='+this.state.take)
-        // fetch(`https://localhost:5001/api/customers/r?offset= ${this.state.start} &limit= ${this.state.take}`)
+        fetch(`https://localhost:5001/api/customers/r?offset= ${this.state.start} &limit= ${this.state.take}`)
 
-
-        // .then(x => x.json()) //muutetaan jsonista javascriptiksi
-        // .then(oliot => this.setState({customers: oliot}))
+        .then(x => x.json()) //muutetaan jsonista javascriptiksi
+        .then(oliot => this.setState({customers: oliot}))
         //.then(todos => console.log(todos)) voi nimetä miten haluaa (todos)
 
         // fetch(uri) Nämä odottaa jos pitää päivittää uriksi toi fetch
@@ -192,55 +168,25 @@ class NWCustomerFetch extends Component {
 
                         <button onClick={this.handleChildUnmount}>Selaa asiakkaita</button>
                     </div>
-
-                    {this.state.näytäHelppi === true ? <Helpit moduli={"customerAdd"} /> : null}
-
-                    <NWCustomerAdd unmountMe={this.handleChildUnmount} /> 
+                    {this.state.näytäHelppi === true ? <Helpit moduli={"customer"} /> : null}
+                    <NWCustomerAdd unmountMe={this.handleChildUnmount} />
                     {/* //voi laittaa nullin tilalle = jompi kumpi näkyy */}
                 </div>
             )
         }
 
-        //EDIT______________________________________________________
-        if (this.state.show === 'editForm') //voi nimetä itse "lisäyslomake" tässä tapauksessa
+        //liittyy CustomerAddiin
+        if (this.state.show === 'addForm') //voi nimetä itse "lisäyslomake" tässä tapauksessa
         {
             return(
-                <div className="box3">
-                    <h2>Asiakkaan muokkaus</h2>
-                    <div>
-                        {this.state.näytäHelppi === false ? <button onClick={this.näytäHelppiPainettu}>Näytä opaste</button>
-                        : <button onClick={this.näytäHelppiPainettu}>Piilota opaste</button>}
-
-                        <button onClick={this.handleChildUnmount}>Selaa asiakkaita</button>
-                    </div>
-
-                    {this.state.näytäHelppi === true ? <Helpit moduli={"customerEdit"} /> : null}
-
-                    <NWCustomerEdit asiakasObj={this.state.muokattavaAsiakas} unmountMe={this.handleChildUnmount} /> 
-                    {/* //voi laittaa nullin tilalle = jompi kumpi näkyy */}
-                </div>
+                <NWCustomerAdd unmountMe={this.handleChildUnmount} />
             )
         }
 
-        if (this.state.show === 'deleteForm') //voi nimetä itse "lisäyslomake" tässä tapauksessa
-        {
-            return(
-                <div className="box4">
-                    <h2>Asiakkaan poistaminen</h2>
-                    <div>
-                        {this.state.näytäHelppi === false ? <button onClick={this.näytäHelppiPainettu}>Näytä opaste</button>
-                        : <button onClick={this.näytäHelppiPainettu}>Piilota opaste</button>}
+        // const {customers: todos} = this.state
 
-                        <button onClick={this.handleChildUnmount}>Selaa asiakkaita</button>
-                    </div>
+        // console.log("State on: ", this.state.todos) //pilkku yhdistää, + ei futaa
 
-                    {this.state.näytäHelppi === true ? <Helpit moduli={"customerDelete"} /> : null}
-
-                    <NWCustomerDelete asiakasObj={this.state.poistettavaAsiakas} unmountMe={this.handleChildUnmount} /> 
-                    {/* //voi laittaa nullin tilalle = jompi kumpi näkyy */}
-                </div>
-            )
-        }
 
         if (this.state.customers.length > 9 ) { //this.state.todos.length
 
@@ -248,15 +194,9 @@ class NWCustomerFetch extends Component {
             return(
                 <div className="customers">
                     <h2>Customers</h2>
-
-                    <br />
-
                     <button onClick={this.handleClickPrev}>Previous</button>
                     <button onClick={this.handleClickNext}>Next</button>
                     <button onClick={this.handleClickAddForm}>Lisää uusi</button>
-
-                    <br />
-                    <br />
 
                     <table>
                         <thead>
@@ -274,36 +214,25 @@ class NWCustomerFetch extends Component {
                                     <td>{c.contactName}</td>
                                     <td>{c.city}</td>
                                     <td>{c.country}</td>
-                                    <td><button onClick={() => this.handleClickEdit(c)}>Muokkaa</button></td>
-                                    <td><button onClick={() => this.handleClickDelete(c)}>Poista</button></td>
                                 </tr>
                             ))} 
                         </tbody>
                     </table>
                     <p>
-                    <br />
-                        {this.state.näytäHelppi === false ? <button onClick={this.näytäHelppiPainettu}>Näytä opaste</button>
-                        : <button onClick={this.näytäHelppiPainettu}>Piilota opaste</button>}
-                        {/* {this.state.näytäHelppi === false && <button onClick={this.näytäHelppiPainettu}>Näytä helppi</button>}
-                        {this.state.näytäHelppi === true && <button onClick={this.näytäHelppiPainettu}>Piilota helppi</button>} */}
+                        {this.state.näytäHelppi === false && <button onClick={this.näytäHelppiPainettu}>Näytä helppi</button>}
+                        {this.state.näytäHelppi === true && <button onClick={this.näytäHelppiPainettu}>Piilota helppi</button>}
                         {this.state.näytäHelppi === true && <Helpit moduli={"customer"} />}
                     </p>
                 </div>
             )
         }
-
         else if (this.state.customers.length > 0 && this.state.customers.length < 10) {
             return(
                 <div className="customers">
                     <h2>Customers</h2>
-
-                    <br />
-                    <button disabled="true" onClick={this.handleClickPrev}>Previous</button>
+                    <button onClick={this.handleClickPrev}>Previous</button>
                     <button disabled="true">Next</button>
                     <button onClick={this.handleClickAddForm}>Lisää uusi</button>
-
-                    <br />
-                    <br />
 
                     <table>
                         <thead>
@@ -321,14 +250,11 @@ class NWCustomerFetch extends Component {
                                     <td>{c.contactName}</td>
                                     <td>{c.city}</td>
                                     <td>{c.country}</td>
-                                    <td><button onClick={() => this.handleClickEdit(c)}>Muokkaa</button></td>
-                                    <td><button onClick={() => this.handleClickDelete(c)}>Poista</button></td>
                                 </tr>
                             ))} 
                         </tbody>
                     </table>
                     <p>
-                    <br />
                         {this.state.näytäHelppi === false && <button onClick={this.näytäHelppiPainettu}>Näytä helppi</button>}
                         {this.state.näytäHelppi === true && <button onClick={this.näytäHelppiPainettu}>Piilota helppi</button>}
                         {this.state.näytäHelppi === true && <Helpit moduli={"customer"} />}

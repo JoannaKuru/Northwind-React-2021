@@ -49,7 +49,7 @@ class AnalogWatch extends Component { //tila-objekti
         return (
             <div className="Kello">
                 <Clock value={this.state.pvm} size={100} hourMarksLength={20} />
-                
+                <br />
                 {this.state.näytäHelppi === false && <button onClick={this.näytäHelppiPainettu}>Näytä helppi</button>}
                 {this.state.näytäHelppi === true && <button onClick={this.näytäHelppiPainettu}>Piilota helppi</button>}
                 

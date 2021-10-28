@@ -91,14 +91,17 @@ class NWCustomerAdd extends Component {
         const asiakasJson = JSON.stringify(asiakas);
         console.log("asiakasJson = " + asiakasJson);
 
-        let apiUrl = 'https://localhost:5001/api/customers'
+        let jwtoken = localStorage.getItem('token')
 
-        //let apiUrl = 'https://aspnet-react-northwind.azurewebsites.net/nw/customers/'
+        let apiUrl = 'https://northwindrestapi2021azure.azurewebsites.net/api/customers/'
+
+        // let apiUrl = 'https://localhost:5001/api/customers/'
 
         //request
         fetch(apiUrl, {
             method: "POST",
             headers: {
+                Authorization: "Bearer " + jwtoken,
                 "Accept": "application/json",
                 "Content-Type": "application/json"
             },
@@ -119,9 +122,7 @@ class NWCustomerAdd extends Component {
     render() {
         return(
         <div>
-            <h2>Asiakkaan lisääminen</h2>
-
-            <form className="box3" onSubmit={this.handleSubmit}>
+            <form className="box1" onSubmit={this.handleSubmit}>
                 <input type="text" title="Syötä asiakastunnus 5x ISO KIRJAIN" placeholder="ID = 5x ISO kirjain" onChange={this.handleChangeCustomerID} />
                 <input type="text" placeholder="Firma" onChange={this.handleChangeCompanyName} />
                 <input type="text" placeholder="Yhteyshlö" onChange={this.handleChangeContactName} />
@@ -132,6 +133,7 @@ class NWCustomerAdd extends Component {
                 <input type="text" placeholder="Maa" onChange={this.handleChangeCountry} />
                 <input type="text" placeholder="Puh nro" onChange={this.handleChangePhone} />
                 <input type="text" placeholder="Fax nro" onChange={this.handleChangeFax} />
+                <br />
                 <br />
                 <button type="submit">Tallenna uudet tiedot</button>
             </form>

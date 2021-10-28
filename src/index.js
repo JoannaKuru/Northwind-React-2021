@@ -24,7 +24,8 @@ ReactDOM.render(
     <App />
     <AnalogWatch />
     <Viestit />
-    <DigitalWatch /> */}
+    <DigitalWatch />
+    <Login /> */}
 
   </React.StrictMode>,
   document.getElementById('root')
