@@ -16,9 +16,9 @@ class Navigaatio extends Component {
       return (
         <Router>
           <div>
-            <h1 style={{ marginLeft: '2%' }}>Northwind React Application</h1>
+            <h1 style={{ marginLeft: '2%' }}>Northwind React Application </h1>
 
-            <h3 style={{ marginLeft: '60%' }}><Login /></h3>
+            <h3 style={{ marginLeft: '70%' }}><Login /></h3>
   
             <nav className='navbar navbar-expand-lg navbar-light bg-light'>
               <ul className='navbar-nav mr-auto'>
